@@ -47,36 +47,8 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label for="filtroPorTipo">Cargo/Ministério:</label>
-                <select class="form-select" id="filtroPorTipo" ng-model="filtroPorTipo" ng-change="filtrarDados()">
+                <select class="form-select" id="filtroPorTipo" ng-model="filtroPorTipo" ng-change="filtrarDados()" ng-options="item for item in tipos">
                     <option value="">--Selecione--</option>
-                    <option value="Todos">Todos</option>
-                    <option value="Ministério">Ministério</option>
-                    <option value="Encarregado de Orquestra">Encarregado de Orquestra</option>
-                    <option value="Administração">Administração</option>
-                    <option value="Fundo Biblico">Fundo Biblico</option>
-                    <option value="Som">Som</option>
-                    <option value="Manutenção">Manutenção</option>
-                    <option value="Ar Condicionado">Ar Condicionado</option>
-                    <option value="Limpeza Geral">Limpeza Geral</option>
-                    <option value="Voluntariado">Voluntariado</option>
-                    <option value="Imobilizado">Imobilizado</option>
-                    <option value="Brigadista">Brigadista</option>
-                    <option value="Caseiros">Caseiros</option>
-                    <option value="Cozinha">Cozinha</option>
-                    <option value="Limpeza">Limpeza</option>
-                    <option value="Estacionamento">Estacionamento</option>
-                    <option value="Porteiros Culto Oficial">Porteiros Culto Oficial</option>
-                    <option value="Porteiros Reunião de Jovens e Menores">Porteiros RJM</option>
-                    <option value="Auxiliares dos Sanitários Culto Oficial">Auxiliares dos Sanitários Culto Oficial
-                    </option>
-                    <option value="Auxiliares dos Sanitários Reunião de Jovens e Menores">Auxiliares dos Sanitários RJM
-                    </option>
-                    <option value="Espaço Bíblico Infantil">Espaço Bíblico Infantil</option>
-                    <option value="Auxiliares das Portas Culto Oficial">Auxiliares das Portas Culto Oficial</option>
-                    <option value="Auxiliares das Portas Reunião de Jovens e Menores">Auxiliares das Portas RJM</option>
-                    <option value="Auxiliares dos Sanitários Culto Oficial">Auxiliares dos Sanitários Culto Oficial
-                    </option>
-                    <option value="Auxiliares dos Sanitários Reunião de Jovens">Auxiliares dos Sanitários RJM</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
@@ -108,8 +80,8 @@
                         <td>{{x.NOME}}</td>
                         <td>
                             {{x.CONTATO}}
-                            <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)"
-                                ng-show="x.CONTATO" title-custom="Copiar para área de transferência"></i>
+                            <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
+                                title-custom="Copiar para área de transferência"></i>
                         </td>
                     </tr>
                 </tbody>
@@ -146,8 +118,16 @@
     <script>
         var app = angular.module('meuApp', []);
         app.run(function ($rootScope, $location, $http) {
+            $rootScope.tipos = []
             $http.get("https://felipe-lopes-1.github.io/agenda-ccb-pq-guarani/dados.json").then(function (response) {
                 $rootScope.dados = response.data;
+                var tipos = Array.from(
+                    new Map($rootScope.dados.map(obj => [obj.TIPO, obj])).values()
+                );
+                tipos.forEach(element => {
+                    $rootScope.tipos.push(element.TIPO)
+                });
+                console.log($rootScope.tipos);
             });
             $rootScope.orderByMe = function (coluna) {
                 $rootScope.minhaOrdem = coluna;
