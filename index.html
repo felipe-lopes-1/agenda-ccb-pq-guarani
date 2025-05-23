@@ -219,7 +219,8 @@
         var app = angular.module('meuApp', []);
         app.run(function ($rootScope, $location, $http) {
             $rootScope.tipos = ['Todos'];
-            $http.get("https://felipe-lopes-1.github.io/agenda-ccb-pq-guarani/dados.json").then(function (response) {
+            // $http.get("https://felipe-lopes-1.github.io/agenda-ccb-pq-guarani/dados.json").then(function (response) {
+            $http.get("https://opensheet.elk.sh/1yKFVfnEdAkHfj_7-WvfJ9xotRlle6dlyjCIctrwggHE/1").then(function (response) {
                 $rootScope.dados = response.data;
                 var tipos = Array.from(
                     new Map($rootScope.dados.map(obj => [obj.TIPO, obj])).values()
