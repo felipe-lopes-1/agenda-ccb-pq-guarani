@@ -52,7 +52,7 @@
     <div class="text-center">
         <img src="logo-ccb-light.png" width="180">
         <h1>Agenda Parque Guarani</h1>
-        <h6>Contato de irmãos e irmãs com cargo ou ministério</h2>
+        <h6>Contato de irmãos e irmãs com cargo ou ministério</h6>
     </div>
 
     <hr>
@@ -72,152 +72,176 @@
             <div class="form-group col-md-6">
                 <label for="filtroPorTipo">Cargo/Ministério:</label>
                 <select class="form-select" id="filtroPorTipo" ng-model="filtroPorTipo" ng-change="filtrarDados()"
-                    ng-options="item for item in tipos">
+                    ng-options="item for item in tipos" ng-disabled="carregando || erro">
                     <option value="">--Selecione--</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label for="filtro">Palavra-chave</label>
                 <input type="text" class="form-control" id="filtro" placeholder="Digite uma palavra-chave"
-                    ng-model="filtro">
+                    ng-model="filtro" ng-disabled="carregando || erro">
             </div>
         </div>
     </form>
 
     <br>
 
-    <div class="card" ng-show="!filtroPorTipo || filtroPorTipo == 'Todos'">
-        <div class="card-header">
-            <h5 class="text-center">Lista Geral</h5>
+    <!--
+    CARREGANDO
+    -->
+    <div class="text-center" ng-show="carregando">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Carregando...</span>
         </div>
-        <!--
+        <br>
+    </div>
+
+    <!--
+    CONTEÚDO PRINCIPAL. SEM ERRO
+    -->
+    <div class="conteudo" ng-show="!carregando && !erro">
+        <div class="card" ng-show="!filtroPorTipo || filtroPorTipo == 'Todos'">
+            <div class="card-header">
+                <h5 class="text-center">Lista Geral</h5>
+            </div>
+            <!--
             TABELA PARA DESKTOP
             LISTA GERAL
-        -->
-        <div class="card-body d-none d-lg-block">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Cargo/Ministério</th>
-                        <th>Nome</th>
-                        <th>Ingresso</th>
-                        <th>Telefone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="x in dados | filter: customFiltro">
-                        <td>{{x.TIPO}}</td>
-                        <td>{{x.NOME}}</td>
-                        <td>{{x.INGRESSO}}</td>
-                        <td>
-                            {{x.CONTATO}}
-                            <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
-                                title-custom="Copiar para área de transferência"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+            -->
+            <div class="card-body d-none d-lg-block">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Cargo/Ministério</th>
+                            <th>Nome</th>
+                            <th>Ingresso</th>
+                            <th>Telefone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in dados | filter: customFiltro">
+                            <td>{{x.TIPO}}</td>
+                            <td>{{x.NOME}}</td>
+                            <td>{{x.INGRESSO}}</td>
+                            <td>
+                                {{x.CONTATO}}
+                                <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
+                                    title-custom="Copiar para área de transferência"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-        <!--
+            <!--
             CARD PARA MOBILE
             LISTA GERAL
-        -->
-        <div class="card-body d-lg-none">
-            <div class="accordion" id="accordionMobile">
+            -->
+            <div class="card-body d-lg-none">
+                <div class="accordion" id="accordionMobile">
 
-                <div class="accordion-item" ng-repeat="x in dados | filter: customFiltro">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse{{$index}}">
-                            {{x.NOME}}
-                        </button>
-                    </h2>
-                    <div id="collapse{{$index}}" ng-model="collapse" class="accordion-collapse collapse"
-                        data-bs-parent="#accordionMobile">
-                        <div class="accordion-body">
-                            <h5>{{x.TIPO}}</h5>
-                            <div class="">
+                    <div class="accordion-item" ng-repeat="x in dados | filter: customFiltro">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse{{$index}}">
+                                {{x.NOME}}
+                            </button>
+                        </h2>
+                        <div id="collapse{{$index}}" ng-model="collapse" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionMobile">
+                            <div class="accordion-body">
+                                <h5>{{x.TIPO}}</h5>
                                 <div class="">
-                                    <p><strong>Ingresso:</strong> {{x.INGRESSO}}</p>
-                                </div>
-                                <div class="">
-                                    <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
-                                            ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
-                                            title-custom="Copiar para área de transferência"></i></p>
+                                    <div class="">
+                                        <p><strong>Ingresso:</strong> {{x.INGRESSO}}</p>
+                                    </div>
+                                    <div class="">
+                                        <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
+                                                ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
+                                                title-custom="Copiar para área de transferência"></i></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+                </div>
+            </div>
+        </div>
+
+        <div class="card" ng-show="filtroPorTipo && filtroPorTipo != 'Todos'">
+            <div class="card-header">
+                <h5 class="text-center">{{filtroPorTipo}}</h5>
+            </div>
+            <!--
+            TABELA PARA DESKTOP
+            LISTA POR CARGO/MINISTÉRIO
+            -->
+            <div class="card-body d-none d-lg-block">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th ng-click="orderByMe('NOME')">Nome</th>
+                            <th ng-click="orderByMe('INGRESSO')">Ingresso</th>
+                            <th ng-click="orderByMe('CONTATO')">Telefone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in dadosFiltrados | filter: customFiltro">
+                            <td>{{x.NOME}}</td>
+                            <td>{{x.INGRESSO}}</td>
+                            <td>
+                                {{x.CONTATO}}
+                                <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
+                                    title-custom="Copiar para área de transferência"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--
+            CARD PARA MOBILE
+            LISTA CARGO/MINISTÉRIO
+            -->
+            <div class="card-body d-lg-none">
+                <div class="accordion" id="accordionMobile">
+
+                    <div class="accordion-item" ng-repeat="x in dadosFiltrados | filter: customFiltro">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapse{{$index}}">
+                                {{x.NOME}}
+                            </button>
+                        </h2>
+                        <div id="collapse{{$index}}" ng-model="collapse" class="accordion-collapse collapse"
+                            data-bs-parent="#accordionMobile">
+                            <div class="accordion-body">
+                                <h5>{{x.TIPO}}</h5>
+                                <div class="">
+                                    <div class="">
+                                        <p><strong>Ingresso:</strong> {{x.INGRESSO}}</p>
+                                    </div>
+                                    <div class="">
+                                        <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
+                                                ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
+                                                title-custom="Copiar para área de transferência"></i></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="card" ng-show="filtroPorTipo && filtroPorTipo != 'Todos'">
-        <div class="card-header">
-            <h5 class="text-center">{{filtroPorTipo}}</h5>
-        </div>
-        <!--
-            TABELA PARA DESKTOP
-            LISTA POR CARGO/MINISTÉRIO
-        -->
-        <div class="card-body d-none d-lg-block">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th ng-click="orderByMe('NOME')">Nome</th>
-                        <th ng-click="orderByMe('INGRESSO')">Ingresso</th>
-                        <th ng-click="orderByMe('CONTATO')">Telefone</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="x in dadosFiltrados | filter: customFiltro">
-                        <td>{{x.NOME}}</td>
-                        <td>{{x.INGRESSO}}</td>
-                        <td>
-                            {{x.CONTATO}}
-                            <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
-                                title-custom="Copiar para área de transferência"></i>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--
-            CARD PARA MOBILE
-            LISTA CARGO/MINISTÉRIO
-        -->
-        <div class="card-body d-lg-none">
-            <div class="accordion" id="accordionMobile">
-
-                <div class="accordion-item" ng-repeat="x in dadosFiltrados | filter: customFiltro">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#collapse{{$index}}">
-                            {{x.NOME}}
-                        </button>
-                    </h2>
-                    <div id="collapse{{$index}}" ng-model="collapse" class="accordion-collapse collapse"
-                        data-bs-parent="#accordionMobile">
-                        <div class="accordion-body">
-                            <h5>{{x.TIPO}}</h5>
-                            <div class="">
-                                <div class="">
-                                    <p><strong>Ingresso:</strong> {{x.INGRESSO}}</p>
-                                </div>
-                                <div class="">
-                                    <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
-                                            ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
-                                            title-custom="Copiar para área de transferência"></i></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <!--
+    MENSAGEM DE ERRO
+    -->
+    <div class="erro" ng-show="!carregando && erro">
+        <div class="alert alert-danger" role="alert">
+            <i class="fa fa-warning"></i> Não foi possível carregar os dados. Por favor, entre em contato com a administração.
         </div>
     </div>
 
@@ -226,20 +250,40 @@
     <script>
         var app = angular.module('meuApp', []);
         app.run(function ($rootScope, $location, $http) {
-            $rootScope.tipos = ['Todos'];
-            // $http.get("https://felipe-lopes-1.github.io/agenda-ccb-pq-guarani/dados.json").then(function (response) {
-            $http.get("https://opensheet.elk.sh/1yKFVfnEdAkHfj_7-WvfJ9xotRlle6dlyjCIctrwggHE/1").then(function (response) {
-                $rootScope.dados = response.data;
-                $rootScope.dados = $rootScope.dados.filter(x => x.ATIVO == 'TRUE');
 
-                var tipos = Array.from(
-                    new Map($rootScope.dados.map(obj => [obj.TIPO, obj])).values()
-                );
-                tipos.forEach(element => {
-                    $rootScope.tipos.push(element.TIPO)
+            /**
+             * INITIALIZE
+             */
+            $rootScope.carregando = false;
+            $rootScope.erro = false;
+            $rootScope.dados = [];
+            $rootScope.tipos = ['Todos'];
+
+            /**
+             * FUNCTIONS
+             */
+            (function getDados() {
+                $rootScope.carregando = true;
+                // $http.get("https://felipe-lopes-1.github.io/agenda-ccb-pq-guarani/dados.json").then(function (response) {
+                $http.get("https://opensheet.elk.sh/1yKFVfnEdAkHfj_7-WvfJ9xotRlle6dlyjCIctrwggHE/1").then(function (response) {
+                    $rootScope.carregando = false;
+                    $rootScope.erro = false;
+                    $rootScope.dados = response.data;
+                    $rootScope.dados = $rootScope.dados.filter(x => x.ATIVO == 'TRUE');
+
+                    var tipos = Array.from(
+                        new Map($rootScope.dados.map(obj => [obj.TIPO, obj])).values()
+                    );
+                    tipos.forEach(element => {
+                        $rootScope.tipos.push(element.TIPO)
+                    });
+                }, function error(e) {
+                    $rootScope.carregando = false;
+                    $rootScope.erro = true;
+                    console.log('ERROR LOG: ' + e);
                 });
-                console.log($rootScope.tipos);
-            });
+            })();
+
             $rootScope.orderByMe = function (coluna) {
                 $rootScope.minhaOrdem = coluna;
             };
