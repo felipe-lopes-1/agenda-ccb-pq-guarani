@@ -42,12 +42,89 @@
             width: 100px;
             border-radius: 5px;
         }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        body.dark-mode .card {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        body.dark-mode .form-control,
+        body.dark-mode .form-select,
+        body.dark-mode .accordion-button,
+        body.dark-mode .table {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .accordion-button::after {
+            filter: invert(1);
+        }
+
+        body.dark-mode .btn-outline-dark {
+            border-color: #ffffff;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-outline-dark:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        body.dark-mode table.table {
+            background-color: #2a2a2a;
+            color: #ffffff;
+            border-color: #444;
+        }
+
+        body.dark-mode table.table th,
+        body.dark-mode table.table td {
+            background-color: #2a2a2a !important;
+            color: #ffffff;
+            border-color: #444 !important;
+        }
+
+        body.dark-mode input::placeholder {
+            color: #bbbbbb;
+        }
+
+        body.dark-mode select {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .accordion-button {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .accordion-body {
+            background-color: #1e1e1e;
+            color: #ffffff;
+        }
+
+        body.dark-mode .accordion-button:not(.collapsed) {
+            background-color: #333;
+            color: #fff;
+        }
+
+        body.dark-mode .accordion-item {
+            border-color: #444;
+        }
     </style>
 </head>
 
 <body class="container" ng-app="meuApp">
 
-    <br>
+    <div class="text-end">
+        <button id="toggleTheme" class="btn btn-outline-dark mb-3">
+            <i class="fa fa-moon-o"></i>
+        </button>
+    </div>
 
     <div class="text-center">
         <img src="logo-ccb-light.png" width="180">
@@ -241,7 +318,8 @@
     -->
     <div class="erro" ng-show="!carregando && erro">
         <div class="alert alert-danger" role="alert">
-            <i class="fa fa-warning"></i> Não foi possível carregar os dados. Por favor, entre em contato com a administração.
+            <i class="fa fa-warning"></i> Não foi possível carregar os dados. Por favor, entre em contato com a
+            administração.
         </div>
     </div>
 
@@ -329,6 +407,24 @@
                 return false;
             });
         });
+
+        $(document).ready(function () {
+            $('#toggleTheme').click(function () {
+                $('body').toggleClass('dark-mode');
+
+                // Troca o ícone do botão
+                const icon = $(this).find('i');
+                if ($('body').hasClass('dark-mode')) {
+                    icon.removeClass('fa-moon-o').addClass('fa-sun-o');
+                    // Altere o logo, se necessário
+                    $('img[src="logo-ccb-light.png"]').attr('src', 'logo-ccb-dark.png');
+                } else {
+                    icon.removeClass('fa-sun-o').addClass('fa-moon-o');
+                    $('img[src="logo-ccb-dark.png"]').attr('src', 'logo-ccb-light.png');
+                }
+            });
+        });
+
     </script>
 </body>
 
