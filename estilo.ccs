@@ -1,0 +1,102 @@
+/* VOLTAR AO TOPO */
+#backToTop {
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    display: none;
+    z-index: 9999;
+}
+
+/* BOTÃO COPIAR NÚMERO */
+.fa {
+    cursor: pointer;
+    position: relative;
+}
+
+.fa[title-custom]:hover::after {
+    content: attr(title-custom);
+    position: absolute;
+    left: -250%;
+    bottom: 100%;
+    background-color: #000;
+    color: #fff;
+    padding: 7px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 75%;
+    width: 100px;
+    border-radius: 5px;
+}
+
+/* MODO ESCURO */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode .accordion-button,
+body.dark-mode .table {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+body.dark-mode .accordion-button::after {
+    filter: invert(1);
+}
+
+body.dark-mode .btn-outline-dark {
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+body.dark-mode .btn-outline-dark:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+body.dark-mode table.table {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #444;
+}
+
+body.dark-mode table.table th,
+body.dark-mode table.table td {
+    background-color: #2a2a2a !important;
+    color: #ffffff;
+    border-color: #444 !important;
+}
+
+body.dark-mode input::placeholder {
+    color: #bbbbbb;
+}
+
+body.dark-mode select {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+body.dark-mode .accordion-button {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+body.dark-mode .accordion-body {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode .accordion-button:not(.collapsed) {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode .accordion-item {
+    border-color: #444;
+}
