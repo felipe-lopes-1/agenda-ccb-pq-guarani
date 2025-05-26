@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="ccb_icon.jpg">
+    <link rel="stylesheet" href="estilo.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -15,107 +16,6 @@
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous"></script>
     <title>Agenda Parque Guarani</title>
-    <style>
-        #backToTop {
-            position: fixed;
-            bottom: 40px;
-            right: 30px;
-            display: none;
-            z-index: 9999;
-        }
-
-        .fa {
-            cursor: pointer;
-            position: relative;
-        }
-
-        .fa[title-custom]:hover::after {
-            content: attr(title-custom);
-            position: absolute;
-            left: -250%;
-            bottom: 100%;
-            background-color: #000;
-            color: #fff;
-            padding: 7px;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 75%;
-            width: 100px;
-            border-radius: 5px;
-        }
-
-        body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
-        }
-
-        body.dark-mode .card {
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
-
-        body.dark-mode .form-control,
-        body.dark-mode .form-select,
-        body.dark-mode .accordion-button,
-        body.dark-mode .table {
-            background-color: #2a2a2a;
-            color: #ffffff;
-        }
-
-        body.dark-mode .accordion-button::after {
-            filter: invert(1);
-        }
-
-        body.dark-mode .btn-outline-dark {
-            border-color: #ffffff;
-            color: #ffffff;
-        }
-
-        body.dark-mode .btn-outline-dark:hover {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        body.dark-mode table.table {
-            background-color: #2a2a2a;
-            color: #ffffff;
-            border-color: #444;
-        }
-
-        body.dark-mode table.table th,
-        body.dark-mode table.table td {
-            background-color: #2a2a2a !important;
-            color: #ffffff;
-            border-color: #444 !important;
-        }
-
-        body.dark-mode input::placeholder {
-            color: #bbbbbb;
-        }
-
-        body.dark-mode select {
-            background-color: #2a2a2a;
-            color: #ffffff;
-        }
-
-        body.dark-mode .accordion-button {
-            background-color: #2a2a2a;
-            color: #ffffff;
-        }
-
-        body.dark-mode .accordion-body {
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
-
-        body.dark-mode .accordion-button:not(.collapsed) {
-            background-color: #333;
-            color: #fff;
-        }
-
-        body.dark-mode .accordion-item {
-            border-color: #444;
-        }
-    </style>
 </head>
 
 <body class="container" ng-app="meuApp">
@@ -325,107 +225,8 @@
 
     <br>
 
-    <script>
-        var app = angular.module('meuApp', []);
-        app.run(function ($rootScope, $location, $http) {
-
-            /**
-             * INITIALIZE
-             */
-            $rootScope.carregando = false;
-            $rootScope.erro = false;
-            $rootScope.dados = [];
-            $rootScope.tipos = ['Todos'];
-
-            /**
-             * FUNCTIONS
-             */
-            (function getDados() {
-                $rootScope.carregando = true;
-                // $http.get("https://felipe-lopes-1.github.io/agenda-ccb-pq-guarani/dados.json").then(function (response) {
-                $http.get("https://opensheet.elk.sh/1yKFVfnEdAkHfj_7-WvfJ9xotRlle6dlyjCIctrwggHE/1").then(function (response) {
-                    $rootScope.carregando = false;
-                    $rootScope.erro = false;
-                    $rootScope.dados = response.data;
-                    $rootScope.dados = $rootScope.dados.filter(x => x.ATIVO == 'TRUE');
-
-                    var tipos = Array.from(
-                        new Map($rootScope.dados.map(obj => [obj.TIPO, obj])).values()
-                    );
-                    tipos.forEach(element => {
-                        $rootScope.tipos.push(element.TIPO)
-                    });
-                }, function error(e) {
-                    $rootScope.carregando = false;
-                    $rootScope.erro = true;
-                    console.log('ERROR LOG: ' + e);
-                });
-            })();
-
-            $rootScope.orderByMe = function (coluna) {
-                $rootScope.minhaOrdem = coluna;
-            };
-
-            $rootScope.filtrarDados = function () {
-                $rootScope.dadosFiltrados = $rootScope.dados.filter(x => x.TIPO == $rootScope.filtroPorTipo);
-                $rootScope.filtro = '';
-            };
-
-            $rootScope.copiarTelefone = function (telefone) {
-                navigator.clipboard.writeText(telefone);
-            };
-
-            $rootScope.customFiltro = function (item) {
-                if (!$rootScope.filtro) return true;
-
-                const normalizar = str =>
-                    (str || '').toString().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-                const termo = normalizar($rootScope.filtro);
-
-                return (
-                    normalizar(item.NOME).includes(termo) ||
-                    normalizar(item.TIPO).includes(termo) ||
-                    normalizar(item.INGRESSO).includes(termo) ||
-                    normalizar(item.CONTATO).includes(termo)
-                );
-            };
-
-            const $btn = $('#backToTop');
-            // Mostra/esconde o botão conforme rolagem
-            $(window).scroll(function () {
-                if ($(this).scrollTop() > 200) {
-                    $btn.fadeIn();
-                } else {
-                    $btn.fadeOut();
-                }
-            });
-
-            // Anima rolagem até o topo
-            $btn.click(function () {
-                $('html, body').animate({ scrollTop: 0 }, 0);
-                return false;
-            });
-        });
-
-        $(document).ready(function () {
-            $('#toggleTheme').click(function () {
-                $('body').toggleClass('dark-mode');
-
-                // Troca o ícone do botão
-                const icon = $(this).find('i');
-                if ($('body').hasClass('dark-mode')) {
-                    icon.removeClass('fa-moon-o').addClass('fa-sun-o');
-                    // Altere o logo, se necessário
-                    $('img[src="logo-ccb-light.png"]').attr('src', 'logo-ccb-dark.png');
-                } else {
-                    icon.removeClass('fa-sun-o').addClass('fa-moon-o');
-                    $('img[src="logo-ccb-dark.png"]').attr('src', 'logo-ccb-light.png');
-                }
-            });
-        });
-
-    </script>
+    <script src="scripts.js"></script>
+    <script src="controlador.js"></script>
 </body>
 
 </html>
