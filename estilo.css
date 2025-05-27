@@ -28,6 +28,11 @@
 }
 
 /* MODO ESCURO */
+.toggle-theme #toggleTheme{
+    margin-top: 10px;
+    margin-bottom: 0 !important; 
+}
+
 body.dark-mode {
     background-color: #121212;
     color: #ffffff;
