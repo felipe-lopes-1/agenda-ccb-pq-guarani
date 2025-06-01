@@ -27,6 +27,10 @@
     border-radius: 5px;
 }
 
+.fa-whatsapp {
+    left: 5px;
+}
+
 /* MODO ESCURO */
 .toggle-theme #toggleTheme{
     margin-top: 10px;
