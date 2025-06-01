@@ -47,6 +47,12 @@ app.run(function ($rootScope, $location, $http) {
         navigator.clipboard.writeText(telefone);
     };
 
+    $rootScope.abrirWhatsapp = function(telefone){
+        telefone = telefone.split('-').join('');
+        let link = `https://wa.me/5511${telefone}`;
+        window.open(link, '_blank');
+    };
+
     $rootScope.customFiltro = function (item) {
         if (!$rootScope.filtro) return true;
 
