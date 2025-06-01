@@ -104,6 +104,8 @@
                                 {{x.CONTATO}}
                                 <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
                                     title-custom="Copiar para área de transferência"></i>
+                                <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
+                                    ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true" ng-show="x.CONTATO"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -135,7 +137,11 @@
                                     <div class="">
                                         <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
                                                 ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
-                                                title-custom="Copiar para área de transferência"></i></p>
+                                                title-custom="Copiar para área de transferência"></i>
+                                            <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
+                                                ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true"
+                                                ng-show="x.CONTATO"></i>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -143,6 +149,10 @@
                     </div>
 
                 </div>
+            </div>
+
+            <div class="card-footer text-center">
+                <strong>Total: {{dados.length}}</strong>
             </div>
         </div>
 
@@ -171,6 +181,8 @@
                                 {{x.CONTATO}}
                                 <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
                                     title-custom="Copiar para área de transferência"></i>
+                                <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
+                                    ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true" ng-show="x.CONTATO"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -201,7 +213,11 @@
                                     <div class="">
                                         <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
                                                 ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
-                                                title-custom="Copiar para área de transferência"></i></p>
+                                                title-custom="Copiar para área de transferência"></i>
+                                            <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
+                                                ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true"
+                                                ng-show="x.CONTATO"></i>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -209,6 +225,10 @@
                     </div>
 
                 </div>
+            </div>
+
+            <div class="card-footer text-center">
+                <strong>Total: {{dadosFiltrados.length}}</strong>
             </div>
         </div>
     </div>
