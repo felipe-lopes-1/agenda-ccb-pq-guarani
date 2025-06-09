@@ -19,13 +19,19 @@
 </head>
 
 <body class="container" ng-app="meuApp">
-
+    
+    <!--
+    ALTERNAR MODOS CLARO E ESCURO
+    -->
     <div class="text-end toggle-theme">
         <button id="toggleTheme" class="btn btn-outline-dark mb-3">
             <i class="fa fa-moon-o"></i>
         </button>
     </div>
 
+    <!--
+    LOGO PRINCIPAL
+    -->
     <div class="text-center">
         <img src="logo-ccb-light.png" width="200">
         <h1>Agenda Parque Guarani</h1>
@@ -152,7 +158,7 @@
             </div>
 
             <div class="card-footer text-center">
-                <strong>Total: {{dados.length}}</strong>
+                <strong>Total: {{(dados | filter: customFiltro).length}}</strong>
             </div>
         </div>
 
@@ -228,7 +234,7 @@
             </div>
 
             <div class="card-footer text-center">
-                <strong>Total: {{dadosFiltrados.length}}</strong>
+                <strong>Total: {{(dadosFiltrados | filter: customFiltro).length}}</strong>
             </div>
         </div>
     </div>
