@@ -31,6 +31,13 @@
     left: 5px;
 }
 
+.accordion .accordion-item:nth-child(odd) .accordion-button {
+  background-color: #f8f9fa; /* cor clara */
+}
+.accordion .accordion-item:nth-child(even) .accordion-button {
+  background-color: #e9ecef; /* cor mais escura */
+}
+
 /* MODO ESCURO */
 .toggle-theme #toggleTheme{
     margin-top: 10px;
@@ -108,4 +115,11 @@ body.dark-mode .accordion-button:not(.collapsed) {
 
 body.dark-mode .accordion-item {
     border-color: #444;
+}
+
+body.dark-mode .accordion .accordion-item:nth-child(odd) .accordion-button {
+  background-color: #2a2a2a; /* cor clara */
+}
+body.dark-mode .accordion .accordion-item:nth-child(even) .accordion-button {
+  background-color: #252525; /* cor mais escura */
 }
