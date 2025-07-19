@@ -15,7 +15,7 @@ app.run(function ($rootScope, $location, $http) {
     (function getDados() {
         $rootScope.carregando = true;
         // $http.get("https://felipe-lopes-1.github.io/agenda-ccb-pq-guarani/dados.json").then(function (response) {
-        $http.get("https://opensheet.elk.sh/1yKFVfnEdAkHfj_7-WvfJ9xotRlle6dlyjCIctrwggHE/1").then(function (response) {
+        $http.get("https://opensheet.elk.sh/1sMBzkl3nmXrCkkuTRhCFLX8Kwl4vJc52K31d9E8ZsqM/1").then(function (response) {
             $rootScope.carregando = false;
             $rootScope.erro = false;
             $rootScope.dados = response.data;
@@ -43,13 +43,20 @@ app.run(function ($rootScope, $location, $http) {
         $rootScope.filtro = '';
     };
 
+    $rootScope.exibirTelefone = function(telefone) {
+        if(telefone.length >= 11){
+            telefone = telefone.substring(0,2) + ' ' + telefone.substring(2,telefone.length);
+        }
+        return telefone;
+    }
+
     $rootScope.copiarTelefone = function (telefone) {
         navigator.clipboard.writeText(telefone);
     };
 
     $rootScope.abrirWhatsapp = function(telefone){
         telefone = telefone.split('-').join('');
-        let link = `https://wa.me/5511${telefone}`;
+        let link = `https://wa.me/55${telefone}`;
         window.open(link, '_blank');
     };
 
