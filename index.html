@@ -92,7 +92,7 @@
             LISTA GERAL
             -->
             <div class="card-body d-none d-lg-block">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Cargo/Ministério</th>
@@ -107,11 +107,11 @@
                             <td>{{x.NOME}}</td>
                             <td>{{x.INGRESSO}}</td>
                             <td>
-                                {{x.CONTATO}}
+                                {{exibirTelefone(x.CONTATO)}}
                                 <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
                                     title-custom="Copiar para área de transferência"></i>
                                 <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
-                                    ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true" ng-show="x.CONTATO"></i>
+                                    ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true" ng-show="x.CONTATO && x.CONTATO.length >= 11"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -141,12 +141,12 @@
                                         <p><strong>Ingresso:</strong> {{x.INGRESSO}}</p>
                                     </div>
                                     <div class="">
-                                        <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
+                                        <p><strong>Telefone:</strong> {{exibirTelefone(x.CONTATO)}} <i class="fa fa-clone"
                                                 ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
                                                 title-custom="Copiar para área de transferência"></i>
                                             <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
                                                 ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true"
-                                                ng-show="x.CONTATO"></i>
+                                                ng-show="x.CONTATO && x.CONTATO.length >= 11"></i>
                                         </p>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
             LISTA POR CARGO/MINISTÉRIO
             -->
             <div class="card-body d-none d-lg-block">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th ng-click="orderByMe('NOME')">Nome</th>
@@ -184,11 +184,11 @@
                             <td>{{x.NOME}}</td>
                             <td>{{x.INGRESSO}}</td>
                             <td>
-                                {{x.CONTATO}}
+                                {{exibirTelefone(x.CONTATO)}}
                                 <i class="fa fa-clone" ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
                                     title-custom="Copiar para área de transferência"></i>
                                 <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
-                                    ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true" ng-show="x.CONTATO"></i>
+                                    ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true" ng-show="x.CONTATO && x.CONTATO.length >= 11"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -217,12 +217,12 @@
                                         <p><strong>Ingresso:</strong> {{x.INGRESSO}}</p>
                                     </div>
                                     <div class="">
-                                        <p><strong>Telefone:</strong> {{x.CONTATO}} <i class="fa fa-clone"
+                                        <p><strong>Telefone:</strong> {{exibirTelefone(x.CONTATO)}} <i class="fa fa-clone"
                                                 ng-click="copiarTelefone(x.CONTATO)" ng-show="x.CONTATO"
                                                 title-custom="Copiar para área de transferência"></i>
                                             <i class="fa fa-whatsapp" title-custom="Enviar mensagem por WhatsApp"
                                                 ng-click="abrirWhatsapp(x.CONTATO)" aria-hidden="true"
-                                                ng-show="x.CONTATO"></i>
+                                                ng-show="x.CONTATO && x.CONTATO.length >= 11"></i>
                                         </p>
                                     </div>
                                 </div>
